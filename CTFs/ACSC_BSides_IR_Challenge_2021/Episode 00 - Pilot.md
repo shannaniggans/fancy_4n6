@@ -10,3 +10,13 @@ So I could pretend to play along I setup an instance of ctfd locally in docker f
 
 ![](2022-01-20-19-06-48.png)
 
+
+(13Cubed) Volatility 3 and WSL 2 - Linux DFIR Tools in Windows? - https://youtu.be/rwTWZ7Q5i_w
+
+
+https://github.com/volatilityfoundation/volatility3/releases
+https://pip.pypa.io/en/latest/user_guide/#installing-from-wheels
+
+#### TrufflePig Forensics
+https://trufflepig-forensics.com/
+
