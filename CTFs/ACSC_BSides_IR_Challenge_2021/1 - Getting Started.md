@@ -21,7 +21,9 @@ Flag: 20b25f76cc1839c2e7759a69a82bf664
 What time was this image taken?
 #### Volatility
 * Installed Volatility3 in WSL2
-```./vol -f "/mnt/c/temp/memory.raw" windows.info```
+  
+  ```./vol -f "/mnt/c/temp/memory.raw" windows.info```
+
 gave us:
 
 ``` 
@@ -42,14 +44,18 @@ PE Machine      34404
 PE TimeDateStamp        Mon Nov 22 08:46:06 2010
 ```
 
-Flag: 2021-04-06 01:56:57
-
 #### TrufflePig Forensics
- * Couldnt see where i could find this information in TPF
+ * Couldn't see where I could find this information in TPF
 
-
-
-Flag = TBA
+Flag: 2021-04-06 01:56:57
 
 ### GS-4
 What website management platform are ALIEN using for their public facing website?
+* Just looked at the web log files and googled the cs_uri_stem `/Install/InstallWizard.aspx __VIEWSTATE=&culture=en-US&executeinstall` to see what came back.
+
+* https://www.exploit-db.com/raw/39777
+* https://msadiqm.blogspot.com/2017/11/dotnetnuke-070400-administration.html
+
+Became obvious then.
+
+Flag: DotNetNuke
