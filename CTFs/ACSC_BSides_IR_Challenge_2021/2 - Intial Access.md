@@ -56,18 +56,51 @@ Their malicious 'wizardry' that failed (404 status)
 
 # IA-3
 *What was the filename of the first file created by the actor to test that their exploit worked? (We'll refer to this test file as sample 1)*
+* Given we are looking for a file created I wanted to parse the MFT and look for files created on the file system, corresponding to the timeline from the IIS log analysis: around 2021-04-01 02:50 UTC
+* EZTools - MFTECmd.exe will do the trick to parse the $MFT file provided in the artefacts folder (root of C drive). I'll run this from a PowerShell window.
+  * `C:\Users\fancy_4n6\Desktop\EZTools\MFTECmd.exe --csv "c:\temp\out" --csvf dmz-webpub-mft-c.csv`
+  * Open the CSV, you might need to set the format for the date/time columns. I set the format for columns T -> AA as yyyy-mm-dd hh:mm:ss
+  * I then set a filter on the top row and sorted by column T "Created0x10"
+  * Looking at around 2021-04-01, something immediately caught my eye in Column F ".\Windows\Temp and two files 1617245542.475716.dll (2021-04-01 02:52:10) and 1617245455.5314393.dll (2021-04-01 02:50:43) created after we know the attacker was able to successfully exploit the CVE. We are looking for the first file filename.
 
+**Flag: 1617245455.5314393.dll**
 
+I didn't do this next part on stream as it wasn't specifically called out as required for a challenge, but during a normal investigation I'd likely do some OSINT on these files names. The files are no longer on disk, or we don't have copies of that folder, so it will just be based on what I know so far.
 
+|File Name|Location|Size|MD5|Created Date on C|Info|
+|-|-|-|-|-|-|
+|1617245455.5314393.dll|C:\Windows\Temp|91648| |2021-04-01 02:50:43| |
+|1617245542.475716.dll|C:\Windows\Temp|118784| |2021-04-01 02:52:10| |
 
+It is a long shot and in this instance I came back with nothing from Google + VirusTotal.
 
 # IA-4
 *After calling home, the actor finally succeeded in dropping their core tool, sample 2.What time (UTC) was this tool first used?*
 
+If you saw me on stream they will know this one was a little annoying to get the exact right date/time they were after. Doing a CTF varies from an investigation, though in the end we got there:
+* From the MFT we know that the attacker dropped some files starting at 2021-04-01 02:50:43, when we look below those entries there are a few more curious entries that look like updates being pushed to the site.
 
+|Date Time|Artefact|Info|
+|-|-|-|
+|2021-04-01 02:24:30|IIS Logs|First time we see 13.54.35.87 in the logs|
+|2021-04-01 02:46:33|IIS Logs|First time we see 13.54.35.87 POST to /Telerik.Web.UI.WebResource.axd|
+|2021-04-01 02:50:43|MFT|C:\Windows\Temp\1617245455.5314393.dll|
+|2021-04-01 02:52:10|MFT|C:\Windows\Temp\1617245542.475716.dll|
+|2021-04-01 02:55:29|IIS Logs|First time we see 13.54.35.87 GET to /submit.aspx|
+|2021-04-01 02:55:30|MFT|.\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\App_Web_aa0aecbt.dll|
+|2021-04-01 02:55:30|MFT|.\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\submit.aspx.cdcab7d2.compiled|
+|2021-04-01 02:55:30|MFT|.\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\App_Web_aa0aecbt.dll|
 
-Something for later
+Correlating the logs we can expect that the attacker was able to use their tool via submit.aspx so the correct date time they are after relates to the time in the IIS logs and the attacker action and the first use.
+
+**Flag:2021-04-01 02:55:29**
+
+## Memory and TrufflePig Forensics
+Wanted to have a look at network connections and things going on related to this IP address in memory and found the following netconns:
 ![](2022-01-21-16-11-07.png)
+![](2022-01-29-04-15-17.png)
+
+Will be looking at those further I'm sure in subsequent challenges.
 
 
 
