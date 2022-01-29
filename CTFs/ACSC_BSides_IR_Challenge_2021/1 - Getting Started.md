@@ -2,23 +2,25 @@
 ### GS-0
 Press submit on this one to continue.
 ### GS-1
-How many hosts have we received data from?
+*How many hosts have we received data from?*
 
 * Easy one, just count the number of zip files provided as they named by host.
 
-Flag = 9
+**Flag = 9**
 
 ### GS-2
-What is the MD5 hash of the memory image provided?
+*What is the MD5 hash of the memory image provided?*
 
 * Multiple ways that this can be done, simple enough in Windows to use PowerShell.
 
   ```Get-FileHash memory.raw -Algorithm MD5 | Format-List```
 
-Flag: 20b25f76cc1839c2e7759a69a82bf664
+**Flag: 20b25f76cc1839c2e7759a69a82bf664**
 
 ### GS-3
-What time was this image taken?
+*What time was this image taken?*
+I want to use a few different tools to get the answers and test out some new tools along the way, so I've started here.
+
 #### Volatility
 * Installed Volatility3 in WSL2
   
@@ -47,10 +49,10 @@ PE TimeDateStamp        Mon Nov 22 08:46:06 2010
 #### TrufflePig Forensics
  * Couldn't see where I could find this information in TPF
 
-Flag: 2021-04-06 01:56:57
+**Flag: 2021-04-06 01:56:57**
 
 ### GS-4
-What website management platform are ALIEN using for their public facing website?
+*What website management platform are ALIEN using for their public facing website?*
 * Just looked at the web log files and googled the cs_uri_stem `/Install/InstallWizard.aspx __VIEWSTATE=&culture=en-US&executeinstall` to see what came back.
 
 * https://www.exploit-db.com/raw/39777
@@ -58,4 +60,4 @@ What website management platform are ALIEN using for their public facing website
 
 Became obvious then.
 
-Flag: DotNetNuke
+**Flag: DotNetNuke**

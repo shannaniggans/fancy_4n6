@@ -1,8 +1,8 @@
 # IA-1
-The actor seems to have initially failed to install themselves on the web server. What IP address did their malicious wizardry come from?
+*The actor seems to have initially failed to install themselves on the web server. What IP address did their malicious wizardry come from?*
 * You can get Splunk Enterprise on a free trial license for non commercial use - https://www.splunk.com/en_us/download/get-started-with-your-free-trial.html which is handy to have for these things and to play and learn Splunk on.
 * You can upload a zip file of all the provided IIS log files to Splunk and I created an index for the challenge.
-1. Started by removing the local ip of 10.1.0.80 from the results
+1. Started by removing the local IP of 10.1.0.80 from the results
    ```
    index="acsc_ir_challenge_2021"
    | sort _time
@@ -29,31 +29,40 @@ The actor seems to have initially failed to install themselves on the web server
 
 Their malicious 'wizardry' that failed (404 status)
 
-Flag: 13.54.35.87
+**Flag: 13.54.35.87**
 
 # IA-2
-It looks like the actor eventually succeeded in gaining access using a combination of multiple well-documented CVEs. Which of these is the most recent?
+*It looks like the actor eventually succeeded in gaining access using a combination of multiple well-documented CVEs. Which of these is the most recent?*
 
 * The first indication in the log files that they were successful in gain access (status 500) is the log entry:
 	```
 	2021-04-01 02:49:08 10.1.0.80 POST /Telerik.Web.UI.WebResource.axd type=rau 80 - 13.54.35.87 python-urllib3/1.26.2 - 500 0 0 52
 	c_ip = 13.54.35.87host = dmz-webpubsource = u_ex210401.logsourcetype = iis
 	```
-* Googling `/Telerik.Web.UI.WebResource.axd` and CVE makes it pretty clear that there are a few CVEs bouncing about, but they have asked for the most recent. Coioncidentally an advisory was put out by the ACSC in 2020 that has the interesting details in it - https://www.cyber.gov.au/acsc/view-all-content/advisories/advisory-2020-004-remote-code-execution-vulnerability-being-actively-exploited-vulnerable-versions-telerik-ui-sophisticated-actors
+* Googling `/Telerik.Web.UI.WebResource.axd` and CVE makes it pretty clear that there are a few CVEs bouncing about, but they have asked for the most recent. Coincidentally an advisory was put out by the ACSC in 2020 that has the interesting details in it - https://www.cyber.gov.au/acsc/view-all-content/advisories/advisory-2020-004-remote-code-execution-vulnerability-being-actively-exploited-vulnerable-versions-telerik-ui-sophisticated-actors
 
-Flag: CVE-2019-18935
+**Flag: CVE-2019-18935**
 
-* on a side note and maybe for later, the advisory talked about evidence of the exploit in application event logs, so i jumped in to correlate those.
+* on a side note and maybe for later, the advisory talked about evidence of the exploit in application event logs, so I jumped in to the eventlogs to correlate.
   ![](2022-01-21-15-45-20.png)
 
+**IOCs from the advisory**
+
+|Item|Info|
+|----|----|
+|Advisories and CVEs | CVE-2019-18935, ACSC 2020-004 & ACSC 2019-126|
+|Review web server request logs|<ul><li> `POST /Telerik.Web.UI.WebResource.axd type=rau 443 – 192.0.2.1 - - 500 0 0 457`</li><li> These POST requests may be larger in size than legitimate requests due to the malicious actor uploading malicious files for the purposes of uploading a reverse shell binary.</li></ul>|
+|Review Windows event logs| <ul><li>Event ID: 1309<li>Source: ASP.NET <version_number><li>Message: Contains the following strings in addition to other error message content:</li><ul><li>An unhandled exception has occurred.<br>`Unable to cast object of type ‘System.Configuration.Install.AssemblyInstaller’ to type ‘Telerik.Web.UI.IAsyncUploadConfiguration`</li></ul></ul><ul><li>Organisations should review the application event logs on vulnerable or previously vulnerable hosts for indications of Telerik exploitation. This analysis can be combined looking for associated HTTP 500 responses as identified above.</li></ul>
+
 # IA-3
-What was the filename of the first file created by the actor to test that their exploit worked? (We'll refer to this test file as sample 1)
-Flag format - filename.ext
+*What was the filename of the first file created by the actor to test that their exploit worked? (We'll refer to this test file as sample 1)*
+
+
 
 
 
 # IA-4
-After calling home, the actor finally succeeded in dropping their core tool, sample 2.What time (UTC) was this tool first used?
+*After calling home, the actor finally succeeded in dropping their core tool, sample 2.What time (UTC) was this tool first used?*
 
 
 
@@ -68,5 +77,4 @@ Something for later
 
 
 
-next time - Install volatility in WSL2
-parse MFT - Autopsy and EZTools
+
