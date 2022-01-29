@@ -97,8 +97,8 @@ Correlating the logs we can expect that the attacker was able to use their tool 
 
 ## Memory and TrufflePig Forensics
 Wanted to have a look at network connections and things going on related to this IP address in memory and found the following netconns:
-![](2022-01-21-16-11-07.png)
-![](2022-01-29-04-15-17.png)
+![](Assets\2022-01-21-16-11-07.png)
+![](Assets\2022-01-29-04-15-17.png)
 
 Will be looking at those further I'm sure in subsequent challenges.
 

@@ -9,7 +9,7 @@ So I could pretend to play along I setup an instance of ctfd locally in docker f
 2. Ran "docker run -p 8000:8000 -it ctfd/ctfd:3.3.1-release" to download the image locally, this was the version that worked for me when i imported the config.
 3. Imported the provided ctfd_config.zip to my instance.
 
-![](2022-01-20-19-06-48.png)
+![](Assets\2022-01-20-19-06-48.png)
 
 ## Memory Forensics
 ### Volatility 3
