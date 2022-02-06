@@ -59,7 +59,7 @@ Their malicious 'wizardry' that failed (404 status)
 * Given we are looking for a file created I wanted to parse the MFT and look for files created on the file system, corresponding to the timeline from the IIS log analysis: around 2021-04-01 02:50 UTC
 * EZTools - MFTECmd.exe will do the trick to parse the $MFT file provided in the artefacts folder (root of C drive). I'll run this from a PowerShell window.
   * `C:\Users\fancy_4n6\Desktop\EZTools\MFTECmd.exe --csv "c:\temp\out" --csvf dmz-webpub-mft-c.csv`
-  * Open the CSV, you might need to set the format for the date/time columns. I set the format for columns T -> AA as yyyy-mm-dd hh:mm:ss
+  * Open the CSV, you might need to set the format for the date/time columns. I set the format for columns T -> AA as yyyy-mm-dd hh:mm:ss.000 - NOTE: ensuring that you have the milliseconds represented will stop any rounding which will change your answers.
   * I then set a filter on the top row and sorted by column T "Created0x10"
   * Looking at around 2021-04-01, something immediately caught my eye in Column F ".\Windows\Temp and two files 1617245542.475716.dll (2021-04-01 02:52:10) and 1617245455.5314393.dll (2021-04-01 02:50:43) created after we know the attacker was able to successfully exploit the CVE. We are looking for the first file filename.
 
