@@ -1,7 +1,7 @@
 # Setting up CAPE for fun (and profit)
 I've used CAPE and found it really really useful and wanted to set up an instance to play with and go through the process to understand how its put together.
 
-Running CVAPE in a virutalised environment isn't ideal due to the need for virtualisation in virtualisation, but for my purposes it should be ok.
+Running CAPE in a virutalised environment isn't ideal due to the need for virtualisation in virtualisation, but for my purposes it should be ok.
 
 For ease I'm using Hyper-V which I've enabled under Windows 11.
 
@@ -29,3 +29,12 @@ Stop-VM -Name 'CAPE'
 Set-VMProcessor -VMName 'CAPE' -ExposeVirtualizationExtensions $True
 ```
 That should do it.
+
+## Get Ubuntu set up and install CAPE
+Start the CAPE VM and Connect.
+
+Make sure Ubuntu is up to date.
+```
+sudo apt update
+sudo apt upgrade -y
+```
