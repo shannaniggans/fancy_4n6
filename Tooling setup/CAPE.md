@@ -42,21 +42,21 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-Install Python3 and pip
+### Install Python3 and pip
 ```
 sudo apt install python3 python3-pip mongodb -y
 ```
 
-Install Pillow (9.0.1 was the latest at this time)
+### Install Pillow (9.0.1 was the latest at this time)
 ```
 pip3 install Pillow==9.0.1
 ```
-
 ### The work is already done
 ```
 wget https://raw.githubusercontent.com/doomedraven/Tools/master/Sandbox/cape2.sh
 chmod a+x cape2.sh
 sudo ./cape2.sh base cape
+
 ```
 ## Virtual Machine Creation
 The virtual machines are environments in which samples are detonated.
