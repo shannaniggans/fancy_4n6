@@ -48,11 +48,11 @@ Their malicious 'wizardry' that failed (404 status)
 
 **IOCs from the advisory**
 
-|Item|Info|
-|----|----|
-|Advisories and CVEs | CVE-2019-18935, ACSC 2020-004 & ACSC 2019-126|
-|Review web server request logs|<ul><li> `POST /Telerik.Web.UI.WebResource.axd type=rau 443 – 192.0.2.1 - - 500 0 0 457`</li><li> These POST requests may be larger in size than legitimate requests due to the malicious actor uploading malicious files for the purposes of uploading a reverse shell binary.</li></ul>|
-|Review Windows event logs| <ul><li>Event ID: 1309<li>Source: ASP.NET <version_number><li>Message: Contains the following strings in addition to other error message content:</li><ul><li>An unhandled exception has occurred.<br>`Unable to cast object of type ‘System.Configuration.Install.AssemblyInstaller’ to type ‘Telerik.Web.UI.IAsyncUploadConfiguration`</li></ul></ul><ul><li>Organisations should review the application event logs on vulnerable or previously vulnerable hosts for indications of Telerik exploitation. This analysis can be combined looking for associated HTTP 500 responses as identified above.</li></ul>
+| Item                           | Info                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Advisories and CVEs            | CVE-2019-18935, ACSC 2020-004 & ACSC 2019-126                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Review web server request logs | <ul><li> `POST /Telerik.Web.UI.WebResource.axd type=rau 443 – 192.0.2.1 - - 500 0 0 457`</li><li> These POST requests may be larger in size than legitimate requests due to the malicious actor uploading malicious files for the purposes of uploading a reverse shell binary.</li></ul>                                                                                                                                                                                                                                                                                                                          |
+| Review Windows event logs      | <ul><li>Event ID: 1309<li>Source: ASP.NET <version_number><li>Message: Contains the following strings in addition to other error message content:</li><ul><li>An unhandled exception has occurred.<br>`Unable to cast object of type ‘System.Configuration.Install.AssemblyInstaller’ to type ‘Telerik.Web.UI.IAsyncUploadConfiguration`</li></ul></ul><ul><li>Organisations should review the application event logs on vulnerable or previously vulnerable hosts for indications of Telerik exploitation. This analysis can be combined looking for associated HTTP 500 responses as identified above.</li></ul> |
 
 # IA-3
 *What was the filename of the first file created by the actor to test that their exploit worked? (We'll refer to this test file as sample 1)*
@@ -67,10 +67,10 @@ Their malicious 'wizardry' that failed (404 status)
 
 I didn't do this next part on stream as it wasn't specifically called out as required for a challenge, but during a normal investigation I'd likely do some OSINT on these files names. The files are no longer on disk, or we don't have copies of that folder, so it will just be based on what I know so far.
 
-|File Name|Location|Size|MD5|Created Date on C|Info|
-|-|-|-|-|-|-|
-|1617245455.5314393.dll|C:\Windows\Temp|91648| |2021-04-01 02:50:43| |
-|1617245542.475716.dll|C:\Windows\Temp|118784| |2021-04-01 02:52:10| |
+| File Name              | Location        | Size   | MD5 | Created Date on C   | Info |
+| ---------------------- | --------------- | ------ | --- | ------------------- | ---- |
+| 1617245455.5314393.dll | C:\Windows\Temp | 91648  |     | 2021-04-01 02:50:43 |      |
+| 1617245542.475716.dll  | C:\Windows\Temp | 118784 |     | 2021-04-01 02:52:10 |      |
 
 It is a long shot and in this instance I came back with nothing from Google + VirusTotal.
 
@@ -80,16 +80,16 @@ It is a long shot and in this instance I came back with nothing from Google + Vi
 If you saw me on stream they will know this one was a little annoying to get the exact right date/time they were after. Doing a CTF varies from an investigation, though in the end we got there:
 * From the MFT we know that the attacker dropped some files starting at 2021-04-01 02:50:43, when we look below those entries there are a few more curious entries that look like updates being pushed to the site.
 
-|Date Time|Artefact|Info|
-|-|-|-|
-|2021-04-01 02:24:30|IIS Logs|First time we see 13.54.35.87 in the logs|
-|2021-04-01 02:46:33|IIS Logs|First time we see 13.54.35.87 POST to /Telerik.Web.UI.WebResource.axd|
-|2021-04-01 02:50:43|MFT|C:\Windows\Temp\1617245455.5314393.dll|
-|2021-04-01 02:52:10|MFT|C:\Windows\Temp\1617245542.475716.dll|
-|2021-04-01 02:55:29|IIS Logs|First time we see 13.54.35.87 GET to /submit.aspx|
-|2021-04-01 02:55:30|MFT|.\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\App_Web_aa0aecbt.dll|
-|2021-04-01 02:55:30|MFT|.\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\submit.aspx.cdcab7d2.compiled|
-|2021-04-01 02:55:30|MFT|.\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\App_Web_aa0aecbt.dll|
+| Date Time           | Artefact | Info                                                                                                                        |
+| ------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- |
+| 2021-04-01 02:24:30 | IIS Logs | First time we see 13.54.35.87 in the logs                                                                                   |
+| 2021-04-01 02:46:33 | IIS Logs | First time we see 13.54.35.87 POST to /Telerik.Web.UI.WebResource.axd                                                       |
+| 2021-04-01 02:50:43 | MFT      | C:\Windows\Temp\1617245455.5314393.dll                                                                                      |
+| 2021-04-01 02:52:10 | MFT      | C:\Windows\Temp\1617245542.475716.dll                                                                                       |
+| 2021-04-01 02:55:29 | IIS Logs | First time we see 13.54.35.87 GET to /submit.aspx                                                                           |
+| 2021-04-01 02:55:30 | MFT      | .\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\App_Web_aa0aecbt.dll          |
+| 2021-04-01 02:55:30 | MFT      | .\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\submit.aspx.cdcab7d2.compiled |
+| 2021-04-01 02:55:30 | MFT      | .\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\root\a056c683\f67bca3c\App_Web_aa0aecbt.dll          |
 
 Correlating the logs we can expect that the attacker was able to use their tool via submit.aspx so the correct date time they are after relates to the time in the IIS logs and the attacker action and the first use.
 
