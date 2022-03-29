@@ -39,7 +39,6 @@ These plugins greatly increase the number of ingest parsers that can run by Auto
 1. Open Autopsy
 2. Go to Tools > Python Plugins. This will open the directory where the plugins should reside - C:\Users\<username>\AppData\Roaming\autopsy\python_modules
 3. Clone Mark's repository above & copy to the python modules folder.
-4. 
 
 
 
