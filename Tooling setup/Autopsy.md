@@ -50,8 +50,8 @@ These plugins greatly increase the number of ingest parsers that can run by Auto
 
 ## Running ParseEvtx Python Ingest Module <a name ="Parse_Evtx"></a>
 1. If you add the name of an event log under other, you must add the name and THEN check the other box. To be sure I check it on then off and then on again. Separate the names with a comma. 
-![](Autopsy_parse_evtx_other.png)
+![](Assets\Autopsy_parse_evtx_other.png)
 
 2. You know it's worked when you get the logs in Autopsy OR you check the log file and the list of names appears next to "Other"
-   ![](2022-04-01-05-08-51.png)
+   ![](Assets\2022-04-01-05-08-51.png)
 
