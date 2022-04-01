@@ -27,7 +27,7 @@ So I could pretend to play along I setup an instance of ctfd locally in docker f
 1. I used the PowerShell script to grab all of the EZTools into a directory on my desktop - https://github.com/EricZimmerman/Get-ZimmermanTools
 
 ## Autopsy
-
+[Autopsy Setup](https://github.com/shannaniggans/fancy_4n6/blob/main/Tooling%20setup/Autopsy.md)
 
 
 
