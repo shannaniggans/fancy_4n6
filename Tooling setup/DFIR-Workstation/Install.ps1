@@ -57,7 +57,7 @@ choco install git -y
 # choco install timelineexplorer -y 
 
 # Install EZ Tools
-curl https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1 -o ${ Env:UserProfile }\"Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1" 
+curl https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1 -o "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1" 
 & Get-ZimmermanTools.ps1 -Dest "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools"
 
 # set the Windows Update service to "disabled"
