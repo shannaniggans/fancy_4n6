@@ -42,7 +42,8 @@ Install-WindowsUpdate -AcceptEula
 
 # Create a directory to add our Tools & create a short cut on the desktop
 Write-Host "[*] Creating a directory on the Desktop to add our Tools ..."
-New-Item ${Env:UserProfile}\"Desktop\DFIR\Tools" -ItemType Directory
+New-Item ${Env:UserProfile}\"Desktop\DFIR\Tools" -ItemType Directory #Where we'll drop our toolset
+New-Item ${Env:UserProfile}\"Desktop\DFIR\Tools\EZTools" -ItemType Directory #specifically adding for EZTools
 
 # Display hidden files, folder drives and protected OS files with modifiers
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
@@ -57,8 +58,8 @@ choco install git -y
 # choco install timelineexplorer -y 
 
 # Install EZ Tools
-curl https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1 -o "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1" 
-& Get-ZimmermanTools.ps1 -Dest "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools"
+curl https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1 -o "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1"
+start process powershell ${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1 -Dest "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\" -NoNewWindow
 
 # set the Windows Update service to "disabled"
 sc.exe config wuauserv start=disabled
