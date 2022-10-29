@@ -59,7 +59,7 @@ choco install git -y
 
 # Install EZ Tools
 curl https://raw.githubusercontent.com/EricZimmerman/Get-ZimmermanTools/master/Get-ZimmermanTools.ps1 -o "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1"
-start-process powershell ${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1 -Dest "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\" -NoNewWindow
+start-process powershell "${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\Get-ZimmermanTools.ps1 -Dest ${Env:UserProfile}\Desktop\DFIR\Tools\EZTools\" -NoNewWindow
 
 # set the Windows Update service to "disabled"
 sc.exe config wuauserv start=disabled
